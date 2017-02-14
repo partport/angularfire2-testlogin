@@ -1,0 +1,44 @@
+
+  <form style="width:500px">
+    <div *ngIf="!(af.auth | async)">
+      <div class="form-group">
+        <button (click)="loginTwitter()" class="btn btn-block" style="background:#5EA9DD;color:#fff"><fa [name]="'twitter'" [size]="'3x'"></fa></button>
+        <button (click)="loginFacebook()" class="btn btn-block" style="background-color:#3b5999;color:#fff"><fa [name]="'facebook'" [size]="'3x'"></fa></button>
+        <button (click)="loginGoogle()" class="btn btn-block" style="background-color:#DC4A38;color:#fff"><fa [name]="'google'" [size]="'3x'"></fa></button>
+        <button (click)="overrideLogin()" type="button" class="btn btn-default btn-block">Anonymous</button>
+      </div>
+      <div class="form-group">
+        <label for="InputEmail">Email address</label>
+        <input id="InputEmail" type="email" class="form-control" #txtemail placeholder="Email">
+      </div>
+      <div class="form-group">
+        <label for="InputPassword">Password</label>
+        <input id="InputPassword" type="password" class="form-control" #txtpwd placeholder="Password">
+      </div>
+      <button (click)="loginPassword(txtemail.value,txtpwd.value)" class="btn btn-primary btn-block">Login</button>
+      <button (click)="signup(txtemail.value,txtpwd.value)" type="button" class="btn btn-link">Sign Up</button>
+    </div>
+    <div *ngIf="af.auth | async">
+      <h1>{{ (af.auth | async)?.uid }}</h1>
+      <div *ngIf="(af.auth | async)?.provider == 1">
+        <h1>Twitter</h1>
+        <h2>{{ (af.auth | async)?.twitter.displayName}}</h2>
+        <img src="{{ (af.auth | async)?.twitter.photoURL}}" />
+      </div>
+      <div *ngIf="(af.auth | async)?.provider == 2">
+        <h1>Facebook</h1>
+        <h2>{{ (af.auth | async)?.facebook.displayName}}</h2>
+        <img src="{{ (af.auth | async)?.facebook.photoURL}}" />
+      </div>
+      <div *ngIf="(af.auth | async)?.provider == 3">
+        <h1>Google</h1>
+        <h2>{{ (af.auth | async)?.google.displayName}}</h2>
+        <img src="{{ (af.auth | async)?.google.photoURL}}" />
+      </div>
+      <div *ngIf="(af.auth | async)?.provider == 4">
+        <input type="text"  #updatetext [value]="authState.auth.email" />
+        <button (click)="updateItem(item.$key, updatetext.value,updatesize.value)">Update</button>
+      </div>
+      <button (click)="logout()" class="btn btn-danger">Logout</button>
+    </div>
+  </form>

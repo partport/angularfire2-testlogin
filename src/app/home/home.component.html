@@ -1,0 +1,33 @@
+<h1 *ngIf="!(af.auth | async)">Please <a  routerLink="/login"> Login</a></h1>
+<div *ngIf="(af.auth | async)">
+<hr />
+<ul>
+  <li *ngFor="let item of items | async">
+    <input type="text" #updatetext [value]="item.text" />
+    <input type="text" #updatesize [value]=item.size  />
+    <button (click)="updateItem(item.$key, updatetext.value,updatesize.value)">Update</button>
+    <button (click)="deleteItem(item.$key)">Delete</button>
+  </li>
+</ul>
+<input type="text" #newitem />
+<select #newsize>
+  <option *ngFor = "let size of selectsize">{{size}}
+  </option>
+</select>
+<button (click)="addItem(newitem.value,newsize.value)">Add</button>
+<button (click)="delAll()">Delete All</button>
+
+<hr />
+<ul>
+  <li *ngFor="let item of items | async">
+    {{ item.size }}
+  </li>
+</ul>
+<div>
+
+  <h4>Filter by size</h4>
+  <button (click)="filterBy('small')">Small</button>
+  <button (click)="filterBy('medium')">Medium</button>
+  <button (click)="filterBy('large')">Large</button>
+</div>
+</div>

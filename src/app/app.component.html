@@ -1,0 +1,10 @@
+<h1>IT SOME KIND OF NAVBAR <br />
+ {{title}}
+</h1>
+
+<nav>
+  <a routerLink="/" routerLinkActive="active">home</a>
+  <a *ngIf="!(this.af.auth | async)" routerLink="/login" routerLinkActive="active">login</a>
+  <a *ngIf="this.af.auth | async" (click)="this.af.auth.logout();" href="">logout</a>
+</nav>
+<router-outlet></router-outlet>
